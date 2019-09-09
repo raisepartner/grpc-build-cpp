@@ -1,4 +1,3 @@
-# FROM python:3.7-stretch
 FROM debian:buster
 
 # install packages
@@ -8,11 +7,6 @@ RUN apt-get update \
     ca-certificates netbase wget unzip git curl libgflags-dev libgtest-dev \
     zlib1g-dev clang libc++-dev \
   && rm -rf /var/lib/apt/lists/*
-
-# # configure pip
-# RUN mkdir -p /root/.pip
-# COPY pip.conf /root/.pip/pip.conf
-# RUN pip install --upgrade pip
 
 # build and install grpc
 ENV GRPC_RELEASE_TAG v1.20.0
@@ -39,16 +33,3 @@ RUN echo "==================== cloning repository ====================" \
   && ldconfig \
   && cd / \
   && rm -rf /var/local/git/grpc
-
-# # install golang
-# ENV GOLANG_VERSION=1.11
-# ENV GOROOT=/usr/local/go
-# ENV GOPATH=/go
-# ENV PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
-#
-# RUN curl -O https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz \
-#   && tar -xf go${GOLANG_VERSION}.linux-amd64.tar.gz \
-#   && rm go${GOLANG_VERSION}.linux-amd64.tar.gz \
-#   && mv go /usr/local \
-#   && mkdir -p $GOPATH \
-#   && /usr/local/go/bin/go get -u github.com/golang/protobuf/protoc-gen-go
